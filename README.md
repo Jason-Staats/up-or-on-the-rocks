@@ -2,8 +2,8 @@
 ### A Time Series Analysis of Restaurant Job Recovery Post-Covid-19
 
 ## Overview
-The food services and drinking places sector — restaurants, bars, and similar 
-establishments — is one of the most employment-intensive industries in the United States. 
+The food services and drinking places sector including restaurants, bars, and similar 
+establishments, is one of the most employment-intensive industries in the United States. 
 This project examines monthly employment trends in the sector from January 2016 through 
 March 2026 using data from the U.S. Bureau of Labor Statistics Current Employment 
 Statistics program. The central question is straightforward: did the industry fully 
@@ -61,8 +61,8 @@ levels by mid-2023
 rebound may have run its course
 - A consistent seasonal pattern persists across all years, with employment peaking in 
 June through August and reaching its lowest point in January and February
-- Actual January through March 2026 employment came in below the SARIMA forecast, likely 
-reflecting the impact of tariff increases and broader macroeconomic uncertainty
+- Actual January through March 2026 employment came in below the SARIMA forecast, 
+suggesting the sector may be softening beyond what historical patterns would predict
 
 ## Tools and Libraries
 - **Python** — pandas, numpy, statsmodels, scikit-learn, plotly, seaborn
@@ -84,12 +84,10 @@ data is May 8, 2026. Key questions to track throughout 2026:
 
 - Does the forecast gap widen or narrow as the year progresses?
 - Does the summer seasonal peak materialize at the expected magnitude?
-- Do tariff and macroeconomic headwinds produce a measurable sustained impact on 
-employment levels?
 
 A companion analysis examining the voluntary quit rate for the same sector is also in 
 development, which will provide additional context on labor market health and worker 
 retention trends in the industry.
 
 ## Author
-Jason Staats 
+Jason Staats
