@@ -92,5 +92,4 @@ development, which will provide additional context on labor market health and wo
 retention trends in the industry.
 
 ## Author
-Jason Staats  
-[LinkedIn](https://www.linkedin.com/in/your-profile) | [GitHub](https://github.com/your-handle)
+Jason Staats 
