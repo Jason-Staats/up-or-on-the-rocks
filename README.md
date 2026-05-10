@@ -86,10 +86,5 @@ A companion analysis examining the voluntary quit rate for the same sector is al
 development, which will provide additional context on labor market health and worker 
 retention trends in the industry.
 
-## Repository Structure
-- `notebook.ipynb` — full analysis notebook
-- `README.md` — project overview and methodology
-- `requirements.txt` — project dependencies
-
 ## Author
 Jason Staats
