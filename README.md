@@ -2,17 +2,16 @@
 ### A Time Series Analysis of Restaurant Job Recovery Post-Covid-19
 
 ## Overview
-The food services and drinking places sector including restaurants, bars, and similar 
-establishments, is one of the most employment-intensive industries in the United States. 
+The food services and drinking places sector, which includes restaurants, bars, and similar establishments, is one of the most employment-intensive industries in the United States. 
 This project examines monthly employment trends in the sector from January 2016 through 
-March 2026 using data from the U.S. Bureau of Labor Statistics Current Employment 
+April 2026 using data from the U.S. Bureau of Labor Statistics Current Employment 
 Statistics program. The central question is straightforward: did the industry fully 
 recover from the COVID-19 collapse, or is it still on the rocks?
 
 ## Data Source
 - **Series:** CEU7072200001 — All Employees, Food Services & Drinking Places (NAICS 722)
 - **Provider:** U.S. Bureau of Labor Statistics, Current Employment Statistics (CES)
-- **Period:** January 2016 – March 2026
+- **Period:** January 2016 – April 2026
 - **Frequency:** Monthly
 - **Units:** Employees (raw count)
 - **Access:** BLS Public Data API v2
@@ -26,9 +25,7 @@ payroll activity in the sector rather than a headcount of individual workers.
 **COVID-19 Treatment:** The pandemic caused an unprecedented collapse in employment 
 beginning in March 2020, representing an external shock rather than a feature of the 
 underlying trend or seasonal pattern. Employment values from March 2020 through June 2021 
-were replaced with linearly interpolated estimates to preserve the integrity of the trend 
-and seasonal components. The original and interpolated series are both shown in the 
-notebook for full transparency.
+were replaced with linearly interpolated estimates during decomposition and forecasting stages to preserve the long-term trend and recurring seasonal structure. The original and interpolated series are both shown in the notebook for full transparency.
 
 **Analytical Framework:** The notebook follows a structured time series workflow:
 1. Full series visualization
@@ -55,8 +52,7 @@ SARIMA produced the lowest error and was selected to generate the 2026 forward f
 a pre-pandemic peak of 12.3 million by late 2019
 - The COVID-19 pandemic caused a loss of more than 5 million jobs in a matter of weeks 
 in spring 2020
-- Recovery was swift relative to other sectors, with employment returning to pre-pandemic 
-levels by mid-2023
+- Recovery was relatively swift compared to many other sectors, with employment returning to pre-pandemic levels by mid-2023
 - The series has plateaued near 12.2 million since 2023, suggesting the post-pandemic 
 rebound may have run its course
 - A consistent seasonal pattern persists across all years, with employment peaking in 
@@ -79,8 +75,9 @@ suggesting the sector may be softening beyond what historical patterns would pre
 ## Planned Updates
 This project is designed as a living analysis. The SARIMA model projects employment 
 through December 2026, and actual BLS data will be incorporated monthly as releases 
-become available. The next scheduled BLS Employment Situation release covering April 2026 
-data is May 8, 2026. Key questions to track throughout 2026:
+become available. CES employment estimates are subject to monthly revision as additional 
+payroll data becomes available. The next scheduled BLS Employment Situation release 
+covering May 2026 data is June 5, 2026. Key questions to track throughout 2026:
 
 - Does the forecast gap widen or narrow as the year progresses?
 - Does the summer seasonal peak materialize at the expected magnitude?
@@ -88,6 +85,11 @@ data is May 8, 2026. Key questions to track throughout 2026:
 A companion analysis examining the voluntary quit rate for the same sector is also in 
 development, which will provide additional context on labor market health and worker 
 retention trends in the industry.
+
+## Repository Structure
+- `notebook.ipynb` — full analysis notebook
+- `README.md` — project overview and methodology
+- `requirements.txt` — project dependencies
 
 ## Author
 Jason Staats
