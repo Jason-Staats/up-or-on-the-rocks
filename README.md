@@ -52,7 +52,7 @@ SARIMA produced the lowest error and was selected to generate the 2026 forward f
 a pre-pandemic peak of 12.3 million by late 2019
 - The COVID-19 pandemic caused a loss of more than 5 million jobs in a matter of weeks 
 in spring 2020
-- Recovery was relatively swift compared to many other sectors, with employment returning to pre-pandemic levels by mid-2023
+- Recovery was relatively rapid within the sector, with employment returning to pre-pandemic levels by mid-2023
 - The series has plateaued near 12.2 million since 2023, suggesting the post-pandemic 
 rebound may have run its course
 - A consistent seasonal pattern persists across all years, with employment peaking in 
