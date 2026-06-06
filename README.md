@@ -4,14 +4,14 @@
 ## Overview
 The food services and drinking places sector, which includes restaurants, bars, and similar establishments, is one of the most employment-intensive industries in the United States. 
 This project examines monthly employment trends in the sector from January 2016 through 
-April 2026 using data from the U.S. Bureau of Labor Statistics Current Employment 
+May 2026 using data from the U.S. Bureau of Labor Statistics Current Employment 
 Statistics program. The central question is straightforward: did the industry fully 
 recover from the COVID-19 collapse, or is it still on the rocks?
 
 ## Data Source
 - **Series:** CEU7072200001 — All Employees, Food Services & Drinking Places (NAICS 722)
 - **Provider:** U.S. Bureau of Labor Statistics, Current Employment Statistics (CES)
-- **Period:** January 2016 – April 2026
+- **Period:** January 2016 – May 2026
 - **Frequency:** Monthly
 - **Units:** Employees (raw count)
 - **Access:** BLS Public Data API v2
@@ -40,7 +40,7 @@ complete seasonal cycle. Model performance was assessed using Mean Absolute Erro
 
 | Model | Validation MAE |
 |---|---|
-| ETS | 51,719 |
+| ETS | 146,720 |
 | SARIMA | 45,851 |
 | Seasonal Naive | 49,442 |
 | OLS | 172,317 |
@@ -57,8 +57,9 @@ in spring 2020
 rebound may have run its course
 - A consistent seasonal pattern persists across all years, with employment peaking in 
 June through August and reaching its lowest point in January and February
-- Actual January through March 2026 employment came in below the SARIMA forecast, 
-suggesting the sector may be softening beyond what historical patterns would predict
+- Actual employment from January through May 2026 came in below the SARIMA forecast in
+  four of the first five months, with the gap narrowing each month and May coming in slightly
+  above forecast, leaving open questions about where the industry goes from here
 
 ## Tools and Libraries
 - **Python** — pandas, numpy, statsmodels, scikit-learn, plotly, seaborn
@@ -77,7 +78,7 @@ This project is designed as a living analysis. The SARIMA model projects employm
 through December 2026, and actual BLS data will be incorporated monthly as releases 
 become available. CES employment estimates are subject to monthly revision as additional 
 payroll data becomes available. The next scheduled BLS Employment Situation release 
-covering May 2026 data is June 5, 2026. Key questions to track throughout 2026:
+covering June 2026 data is July 2, 2026. Key questions to track throughout 2026:
 
 - Does the forecast gap widen or narrow as the year progresses?
 - Does the summer seasonal peak materialize at the expected magnitude?
