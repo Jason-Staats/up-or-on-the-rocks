@@ -2,11 +2,11 @@
 ### A Time Series Analysis of Food Services and Drinking Places Employment Through the COVID-19 Recovery
 
 ## Overview
-The food services and drinking places sector, which includes restaurants, bars, and similar establishments, is one of the most employment-intensive industries in the United States. 
-This project examines monthly employment trends in the sector from January 2016 through 
-October 2026 using data from the U.S. Bureau of Labor Statistics Current Employment 
-Statistics program. The central question is straightforward: did the industry fully 
-recover from the COVID-19 collapse, or is it still on the rocks?
+
+This project tracks monthly U.S. payroll employment in food services and drinking places from January 2016 through October 2026. It examines the recovery from the COVID-19 employment collapse, the sector’s recurring seasonal pattern, and how well ETS, SARIMA, and their 50/50 ensemble forecast employment in 2026.
+
+- [October HTML report](up_or_on_the_rocks.html) contains the charts, forecast comparisons, and saved November and December forecasts. Download and open it in a browser for offline viewing.
+- [October analysis notebook](up_or_rocks.ipynb) contains the code and saved outputs.
 
 ## Data Source
 - **Series:** CEU7072200001 — All Employees, Food Services & Drinking Places (NAICS 722)
@@ -27,7 +27,8 @@ payroll activity in the sector rather than a headcount of individual workers.
 
 The notebook displays the recorded and interpolated series side by side. It uses the interpolated series for seasonality analysis, autocorrelation, STL decomposition, and fitting the ETS and SARIMA models. The 2026 evaluation scores both models and their 50/50 ensemble against recorded employment from January through October.
 
-**Analytical Framework:** The notebook follows a structured time series workflow:
+**Analytical Framework.** The notebook follows these steps.
+
 1. Plot the recorded employment series from January 2016 through October 2026.
 2. Interpolate employment from March 2020 through June 2021 for use in the time series analysis.
 3. Examine seasonality using monthly averages, year-by-year overlays, and the estimated STL seasonal component.
@@ -67,23 +68,29 @@ The forecasts use a CES data snapshot that includes historical revisions, so the
 - **Data Access** — BLS Public Data API v2
 
 ## Running the Notebook
-1. Clone the repository
-2. Install dependencies: `pip install pandas numpy statsmodels scikit-learn plotly seaborn matplotlib requests certifi`
-3. Register for a free BLS API key at [https://data.bls.gov/registrationEngine/](https://data.bls.gov/registrationEngine/)
-4. Replace the `API_KEY` value in the first code cell with your key
-5. Run all cells in order
+
+1. Clone the repository and open a terminal in the project folder.
+2. Install Jupyter Notebook and the required libraries.
+
+   ```bash
+   python -m pip install notebook pandas numpy statsmodels scikit-learn plotly seaborn matplotlib requests certifi
+   ```
+
+3. Register for a free BLS API key through the [BLS registration page](https://data.bls.gov/registrationEngine/).
+4. Launch Jupyter with `python -m notebook` and open [`up_or_rocks.ipynb`](up_or_rocks.ipynb).
+5. Replace the `API_KEY` placeholder in the first code cell with your key in your local copy, then run all cells from top to bottom.
 
 The saved notebook results use employment data through October 2026. Rerunning the notebook retrieves available BLS data, which may include revisions or additional months. The forecast evaluation explicitly selects January through October 2026. When refreshing the analysis, update the evaluation cutoff, reporting dates, chart labels, and written findings together.
 
 ## Planned Updates
-The ETS, SARIMA, and 50/50 ensemble forecasts extend through December 2026. As the November and December employment estimates become available, I’ll compare them with the existing forecasts using the same ensemble weights. These two months will provide an initial check on whether the ensemble’s lower January–October MAE carries forward.
+The ETS, SARIMA, and 50/50 ensemble forecasts extend through December 2026. The [October report](up_or_on_the_rocks.html#forecasting) records the November and December predictions. As the employment estimates become available, I’ll score those saved forecasts using the fixed 50/50 weights. The two months will provide an initial check on whether the ensemble’s lower January–October MAE carries forward.
 
 The BLS revises Current Employment Statistics (CES) estimates as more payroll data become available, so previously reported employment levels and forecast errors may change.
 
 Key questions to track during the remainder of 2026 include:
 
 - Does recorded employment continue to ease toward year-end, as ETS and SARIMA project?
-- Does SARIMA continue to underestimate employment in the remaining months?
+- Is SARIMA’s forecast below recorded employment in November or December?
 - Which forecast comes closest to the November and December actuals, and how do those months change the year-to-date MAE for ETS, SARIMA, and the fixed 50/50 ensemble?
 - Do the November and December actuals fall within SARIMA’s 80% and 95% prediction intervals?
 
