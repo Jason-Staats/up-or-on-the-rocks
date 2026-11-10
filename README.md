@@ -4,14 +4,14 @@
 ## Overview
 The food services and drinking places sector, which includes restaurants, bars, and similar establishments, is one of the most employment-intensive industries in the United States. 
 This project examines monthly employment trends in the sector from January 2016 through 
-September 2026 using data from the U.S. Bureau of Labor Statistics Current Employment 
+October 2026 using data from the U.S. Bureau of Labor Statistics Current Employment 
 Statistics program. The central question is straightforward: did the industry fully 
 recover from the COVID-19 collapse, or is it still on the rocks?
 
 ## Data Source
 - **Series:** CEU7072200001 — All Employees, Food Services & Drinking Places (NAICS 722)
 - **Provider:** U.S. Bureau of Labor Statistics, Current Employment Statistics (CES)
-- **Period:** January 2016 – September 2026
+- **Period:** January 2016 – October 2026
 - **Frequency:** Monthly
 - **Seasonal adjustment:** Not seasonally adjusted
 - **Units:** Payroll jobs; BLS values converted from thousands to individual jobs
@@ -23,62 +23,71 @@ paid off payroll are not included. The series is best understood as a measure of
 payroll activity in the sector rather than a headcount of individual workers.
 
 ## Methodology
-**COVID-19 Treatment:** Employment changed sharply beginning in March 2020, creating an extended disruption that differed substantially from the series’ established trend and seasonal pattern. To limit this disruption’s influence on decomposition and forecasting, recorded values from March 2020 through June 2021 were replaced using linear interpolation between February 2020 and July 2021. This creates a simplified bridge across the selected period, not an estimate of actual employment or what employment would have been without the pandemic. It also removes seasonal fluctuations within that window, and the July 2021 endpoint may still reflect pandemic effects. The interpolated series is used for seasonality, autocorrelation, decomposition, and model fitting, while forecast comparisons use recorded employment. The notebook displays both series for transparency.
+**COVID-19 Treatment.** To limit the influence of the pandemic disruption on the analysis, employment values from March 2020 through June 2021 were replaced using linear interpolation between the recorded values for February 2020 and July 2021. The resulting series bridges the disruption and removes seasonal fluctuations within that window. The July 2021 endpoint may still reflect pandemic effects. The interpolated values serve as analytical inputs. They should not be interpreted as recorded employment or as estimates of what employment would have been without the pandemic.
+
+The notebook displays the recorded and interpolated series side by side. It uses the interpolated series for seasonality analysis, autocorrelation, STL decomposition, and fitting the ETS and SARIMA models. The 2026 evaluation scores both models and their 50/50 ensemble against recorded employment from January through October.
 
 **Analytical Framework:** The notebook follows a structured time series workflow:
-1. Full series visualization
-2. COVID-period interpolation
-3. Seasonality analysis including monthly averages, employment by month, overlaid by year, and STL seasonal component
-4. Autocorrelation analysis
-5. STL decomposition into trend, seasonal, and residual components
-6. Multi-model forecasting with holdout validation
-7. Comparison of the selected model’s 2026 forecast with available recorded employment
+1. Plot the recorded employment series from January 2016 through October 2026.
+2. Interpolate employment from March 2020 through June 2021 for use in the time series analysis.
+3. Examine seasonality using monthly averages, year-by-year overlays, and the estimated STL seasonal component.
+4. Measure autocorrelation across monthly lags.
+5. Use STL to separate the series into trend, seasonal, and residual components.
+6. Evaluate four forecasting approaches on the 2025 holdout and select SARIMA based on its lowest mean absolute error (MAE).
+7. Refit SARIMA through December 2025, forecast all 12 months of 2026, and evaluate its errors and prediction interval coverage against January–October actuals.
+8. Explore whether averaging ETS and SARIMA reduces forecast error. Compare their monthly errors and score both models and their 50/50 ensemble against the same January–October actuals.
 
-**Forecasting:** Four models were trained on the interpolated series from January 2016 through December 2024 and validated against recorded employment from January through December 2025, representing one complete seasonal cycle. Model performance was assessed using Mean Absolute Error, measured in payroll jobs.
+**2025 Forecast Validation.** Four forecasting approaches used monthly employment data through December 2024 to forecast January through December 2025. Holding out a full calendar year gave each approach the same seasonal cycle for evaluation. Forecasts were scored against recorded employment using mean absolute error (MAE), measured in payroll jobs.
 
-| Model | Validation MAE (payroll jobs) |
-|---|---|
-| ETS | 146,720 |
+| Forecasting approach | 2025 validation MAE (payroll jobs) |
+|---|---:|
 | SARIMA | 45,851 |
 | Seasonal Naive | 49,442 |
+| ETS | 146,720 |
 | OLS | 172,317 |
 
-SARIMA produced the lowest validation MAE, approximately 7.3% below the Seasonal Naive baseline, and was selected to generate the calendar-year 2026 forecast. The (1,1,1)(1,1,1,12) specification uses first-order autoregressive and moving-average terms with regular and seasonal differencing. The selected model was refitted to the interpolated series through December 2025 and used to forecast January through December 2026, with 80% and 95% prediction intervals and a monthly forecast table. Both SARIMA fits converged. Its predictions were then compared with recorded employment from January through September 2026. These forecasts use the current data snapshot, including historical revisions, so they do not necessarily reproduce the forecasts available at the end of 2025.
+SARIMA had the lowest 2025 validation MAE, approximately 7.3% below the Seasonal Naive baseline, so it was selected for the original 2026 forecast. The SARIMA(1,1,1)(1,1,1,12) specification uses first-order autoregressive and moving-average terms with regular and seasonal differencing. Both the validation fit and the final fit converged. The final model used the COVID-interpolated series through December 2025 to forecast all 12 months of 2026 and produce 80% and 95% prediction intervals. Its forecasts and interval coverage were evaluated against recorded employment from January through October 2026.
+
+After reviewing SARIMA’s errors, we fitted ETS to the same series through December 2025 and averaged the ETS and SARIMA forecasts with equal weights. The follow-up comparison scored ETS, SARIMA, and the 50/50 ensemble against the same January–October actuals. Because we explored the ensemble after reviewing those errors, its MAE describes performance on the months that motivated the comparison.
+
+The forecasts use a CES data snapshot that includes historical revisions, so they may differ from forecasts that could have been produced at the end of 2025.
 
 ## Key Findings
-- Food services employment grew from approximately 10.95 million in January 2016 to a pre-pandemic peak of 12.32 million in August 2019.
-- Recorded employment declined by approximately 5.7 million payroll jobs between February and April 2020, a decrease of roughly 47 percent.
-- Employment first exceeded its February 2020 level in June 2022.
-- Employment reached approximately 12.64 million in June 2026 before easing to 12.60 million in July and 12.58 million in August. September brought a decline of 148,400 payroll jobs from August, bringing employment to approximately 12.43 million. Employment remained above the pre-pandemic peak for six consecutive months, from April through September 2026.
-- The series shows a recurring seasonal pattern, with employment generally reaching its highest levels from June through August and its lowest levels in January and February. The pandemic period should be interpreted cautiously because values from March 2020 through June 2021 were replaced through interpolation for the seasonality and modeling analyses.
-- Recorded employment exceeded the SARIMA forecast in eight of the first nine months of 2026. August was the exception, coming in approximately 3,900 payroll jobs below the forecast and producing the smallest absolute forecast error so far this year. April had the largest error at approximately 72,400 jobs above forecast. September employment was approximately 27,000 jobs above forecast, and the January–September MAE was 38,149 payroll jobs.
-- All recorded employment values from January through September 2026 fell within both the 80% and 95% prediction intervals. This describes coverage so far, but nine observations are not enough to establish reliable interval coverage over time.
+- Food services and drinking places employment grew from approximately 10.95 million payroll jobs in January 2016 to a pre-pandemic peak of 12.32 million in August 2019.
+- Employment fell by approximately 5.7 million payroll jobs between February and April 2020, a decline of about 47%. It first exceeded its February 2020 level in June 2022.
+- Employment reached approximately 12.64 million in June 2026 before easing to 12.41 million in October. Payrolls fell by 148,400 jobs in September and another 17,800 in October. Employment remained above the pre-pandemic peak for seven consecutive months, from April through October.
+- Employment generally peaks from June through August and reaches its lowest levels in January and February. Both ETS and SARIMA captured the broad rise into early summer and easing into fall. The seasonality and forecasting analyses use a series with interpolated values from March 2020 through June 2021.
+- SARIMA underestimated employment in eight of the ten months from January through October. August and October were the exceptions. April had the largest absolute error, with actual employment 72,421 jobs above the forecast. In October, actual employment was 23,851 jobs below the forecast.
+- All ten actual values fell within both of SARIMA’s 80% and 95% prediction intervals. A longer evaluation would help establish how reliably the intervals cover future observations.
+- ETS and SARIMA missed in opposite directions in six of the ten months. The 50/50 ensemble had the lowest January–October MAE at 22,513 payroll jobs, compared with 35,351 for ETS and 36,759 for SARIMA. The ensemble was explored after reviewing the errors for those months, so its lower MAE is an exploratory result.
 
 ## Tools and Libraries
-- **Python** — pandas, NumPy, statsmodels, scikit-learn, Plotly, seaborn, Matplotlib, and requests
+- **Python** — pandas, NumPy, statsmodels, scikit-learn, Plotly, seaborn, Matplotlib, requests, and certifi
 - **Environment** — Jupyter Notebook
 - **Data Access** — BLS Public Data API v2
 
 ## Running the Notebook
 1. Clone the repository
-2. Install dependencies: `pip install pandas numpy statsmodels scikit-learn plotly seaborn matplotlib requests`
+2. Install dependencies: `pip install pandas numpy statsmodels scikit-learn plotly seaborn matplotlib requests certifi`
 3. Register for a free BLS API key at [https://data.bls.gov/registrationEngine/](https://data.bls.gov/registrationEngine/)
 4. Replace the `API_KEY` value in the first code cell with your key
 5. Run all cells in order
 
-The saved results reflect data through September 2026. Rerunning the notebook retrieves available BLS data, which may include revisions or additional months. The forecast evaluation currently selects January through September 2026 explicitly. Update that cutoff along with the reporting dates, chart labels, and written findings when refreshing the analysis.
+The saved notebook results use employment data through October 2026. Rerunning the notebook retrieves available BLS data, which may include revisions or additional months. The forecast evaluation explicitly selects January through October 2026. When refreshing the analysis, update the evaluation cutoff, reporting dates, chart labels, and written findings together.
 
 ## Planned Updates
-This project is designed as a living analysis. The SARIMA model projects employment through December 2026, and newly released BLS data will be incorporated monthly. I plan to update the analysis with October 2026 employment data following the Employment Situation release scheduled for November 6, 2026. CES employment estimates are subject to revision as additional payroll information becomes available, so previously reported values and forecast errors may change.
+The ETS, SARIMA, and 50/50 ensemble forecasts extend through December 2026. As the November and December employment estimates become available, I’ll compare them with the existing forecasts using the same ensemble weights. These two months will provide an initial check on whether the ensemble’s lower January–October MAE carries forward.
+
+The BLS revises Current Employment Statistics (CES) estimates as more payroll data become available, so previously reported employment levels and forecast errors may change.
 
 Key questions to track during the remainder of 2026 include:
 
-- Does recorded employment continue to exceed the SARIMA forecast in most months?
-- Does employment follow the model’s overall decline toward December, including the small projected increase in October?
-- How does the model’s cumulative 2026 forecast error change as additional months become available?
-- Do newly recorded values continue to fall within the prediction intervals?
+- Does recorded employment continue to ease toward year-end, as ETS and SARIMA project?
+- Does SARIMA continue to underestimate employment in the remaining months?
+- Which forecast comes closest to the November and December actuals, and how do those months change the year-to-date MAE for ETS, SARIMA, and the fixed 50/50 ensemble?
+- Do the November and December actuals fall within SARIMA’s 80% and 95% prediction intervals?
 
-A companion analysis of the voluntary quit rate for the same sector provides additional context on labor-market conditions and worker retention within the industry.
+A companion analysis of the sector’s voluntary quit rate provides additional context on labor-market conditions and worker retention.
 
 ## Author
 Jason Staats
