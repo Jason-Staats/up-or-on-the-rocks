@@ -5,7 +5,7 @@
 
 This project tracks monthly U.S. payroll employment in food services and drinking places from January 2016 through October 2026. It examines the recovery from the COVID-19 employment collapse, the sector’s recurring seasonal pattern, and how well ETS, SARIMA, and their 50/50 ensemble forecast employment in 2026.
 
-- [October HTML report](up_or_on_the_rocks.html) contains the charts, forecast comparisons, and saved November and December forecasts. Download and open it in a browser for offline viewing.
+- [October report on GitHub Pages](https://jason-staats.github.io/up-or-on-the-rocks/up_or_on_the_rocks.html) contains the charts, forecast comparisons, and saved November and December forecasts.
 - [October analysis notebook](up_or_rocks.ipynb) contains the code and saved outputs.
 
 ## Data Source
@@ -83,7 +83,7 @@ The forecasts use a CES data snapshot that includes historical revisions, so the
 The saved notebook results use employment data through October 2026. Rerunning the notebook retrieves available BLS data, which may include revisions or additional months. The forecast evaluation explicitly selects January through October 2026. When refreshing the analysis, update the evaluation cutoff, reporting dates, chart labels, and written findings together.
 
 ## Planned Updates
-The ETS, SARIMA, and 50/50 ensemble forecasts extend through December 2026. The [October report](up_or_on_the_rocks.html#forecasting) records the November and December predictions. As the employment estimates become available, I’ll score those saved forecasts using the fixed 50/50 weights. The two months will provide an initial check on whether the ensemble’s lower January–October MAE carries forward.
+The ETS, SARIMA, and 50/50 ensemble forecasts extend through December 2026. The [October report](https://jason-staats.github.io/up-or-on-the-rocks/up_or_on_the_rocks.html#forecasting) records the November and December predictions. As the employment estimates become available, I’ll score those saved forecasts using the fixed 50/50 weights. The two months will provide an initial check on whether the ensemble’s lower January–October MAE carries forward.
 
 The BLS revises Current Employment Statistics (CES) estimates as more payroll data become available, so previously reported employment levels and forecast errors may change.
 
